@@ -26,11 +26,13 @@ export default defineConfig({
       "src/**/*",
       "migrations/**/*",
       ".gitignore",
+      ".env.example",
       "package.json",
       "pnpm-lock.yaml",
       "tsconfig.json",
       "zenbu.config.ts",
       "vite.config.ts",
+      "electron-builder.json",
     ],
     ignore: [
       "src/**/*.test.ts",
