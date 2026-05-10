@@ -18,8 +18,8 @@ importers:
         specifier: ^19.0.0
         version: 19.2.3(@types/react@19.2.14)
       '@zenbujs/core':
-        specifier: ^0.0.13
-        version: 0.0.13(@types/node@22.19.18)(electron@42.0.1)(react@19.2.6)(zod@4.4.3)
+        specifier: ^0.0.14
+        version: 0.0.14(@types/node@22.19.18)(electron@42.0.1)(react@19.2.6)(zod@4.4.3)
       react:
         specifier: ^19.0.0
         version: 19.2.6
@@ -701,8 +701,8 @@ packages:
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
 
-  '@zenbujs/core@0.0.13':
-    resolution: {integrity: sha512-eRI/+PNQliM6upWRYmdsVB2rp7EseP0DfhZPpmzM5rzmaxuzvSsjM7qcYn1/KyOIar1RdmJky92rs72VCdg9vQ==}
+  '@zenbujs/core@0.0.14':
+    resolution: {integrity: sha512-ve3SaZ0e6FSWhQcH1HPqfPKgkOj8eM3ZoF/AoV0F7hly1wTA4FJHU1LCIT7sPX9uG8Mdy41dPhrVHriLBxID0w==}
     hasBin: true
     peerDependencies:
       electron: ^42.0.0
@@ -1889,7 +1889,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@zenbujs/core@0.0.13(@types/node@22.19.18)(electron@42.0.1)(react@19.2.6)(zod@4.4.3)':
+  '@zenbujs/core@0.0.14(@types/node@22.19.18)(electron@42.0.1)(react@19.2.6)(zod@4.4.3)':
     dependencies:
       '@parcel/watcher': 2.5.6
       '@vitejs/plugin-react': 5.2.0(vite@6.4.2(@types/node@22.19.18)(tsx@4.21.0))
