@@ -31,6 +31,7 @@ export default defineConfig({
       ".env.example",
       "package.json",
       "pnpm-lock.yaml",
+      "pnpm-workspace.yaml",
       "tsconfig.json",
       "zenbu.config.ts",
       "vite.config.ts",
