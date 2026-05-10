@@ -1,30 +1,31 @@
-import { useState } from "react"
-import { Check, Copy } from "lucide-react"
-import { useRpc } from "@zenbujs/core/react"
-import { PROMPTS, type Prompt } from "./prompts"
-import { CursorIcon } from "./icons/cursor"
-import { VSCodeIcon } from "./icons/vscode"
-import { ZedIcon } from "./icons/zed"
-import { FinderIcon } from "./icons/finder"
+import { useState } from "react";
+import { Check, Copy } from "lucide-react";
+import { useRpc } from "@zenbujs/core/react";
+import { PROMPTS, type Prompt } from "./prompts";
+import { CursorIcon } from "./icons/cursor";
+import { VSCodeIcon } from "./icons/vscode";
+import { ZedIcon } from "./icons/zed";
+import { FinderIcon } from "./icons/finder";
 
-type Editor = "cursor" | "vscode" | "zed" | "finder"
+type Editor = "cursor" | "vscode" | "zed" | "finder";
 
 const EDITORS: {
-  id: Editor
-  label: string
-  Icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement
-  themed?: boolean
+  id: Editor;
+  label: string;
+  Icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
+  themed?: boolean;
 }[] = [
   { id: "cursor", label: "Cursor", Icon: CursorIcon, themed: true },
   { id: "vscode", label: "VS Code", Icon: VSCodeIcon },
   { id: "zed", label: "Zed", Icon: ZedIcon, themed: true },
   { id: "finder", label: "Finder", Icon: FinderIcon },
-]
+];
 
 export function Sidebar() {
   return (
     <aside className="w-[340px] border-l border-zinc-200 dark:border-zinc-900 bg-zinc-50 dark:bg-zinc-950 flex flex-col shrink-0">
       <OpenIn />
+
       <div className="px-4 pt-3 pb-2.5 border-b border-zinc-200 dark:border-zinc-900 text-[12px] text-zinc-500">
         Copy a prompt and paste it into your agent
       </div>
@@ -35,22 +36,23 @@ export function Sidebar() {
           ))}
         </ul>
       </div>
+      
     </aside>
-  )
+  );
 }
 
 function OpenIn() {
-  const rpc = useRpc()
-  const [busy, setBusy] = useState<Editor | null>(null)
+  const rpc = useRpc();
+  const [busy, setBusy] = useState<Editor | null>(null);
 
   const open = async (id: Editor) => {
-    setBusy(id)
+    setBusy(id);
     try {
-      await rpc.repo.openIn({ editor: id })
+      await rpc.app.repo.openIn({ editor: id });
     } finally {
-      setBusy(null)
+      setBusy(null);
     }
-  }
+  };
 
   return (
     <div className="px-4 pt-4 pb-3 border-b border-zinc-200 dark:border-zinc-900">
@@ -75,17 +77,17 @@ function OpenIn() {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 function PromptRow({ prompt }: { prompt: Prompt }) {
-  const [justCopied, setJustCopied] = useState(false)
+  const [justCopied, setJustCopied] = useState(false);
 
   const onCopy = async () => {
-    await navigator.clipboard.writeText(prompt.text)
-    setJustCopied(true)
-    window.setTimeout(() => setJustCopied(false), 1200)
-  }
+    await navigator.clipboard.writeText(prompt.text);
+    setJustCopied(true);
+    window.setTimeout(() => setJustCopied(false), 1200);
+  };
 
   return (
     <li>
@@ -115,5 +117,5 @@ function PromptRow({ prompt }: { prompt: Prompt }) {
         </span>
       </button>
     </li>
-  )
+  );
 }

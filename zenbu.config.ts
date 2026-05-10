@@ -15,16 +15,18 @@ export default defineConfig({
       schema: "./src/main/schema.ts",
       migrations: "./migrations",
     }),
+    "./plugins/cheer/zenbu.plugin.ts",
   ],
 
   build: defineBuildConfig({
     packageManager: { type: "pnpm", version: "10.33.0" },
-    hostVersion: "0.0.1",
     source: ".",
     out: ".zenbu/build/source",
     include: [
       "src/**/*",
       "migrations/**/*",
+      "build/**/*",
+      "plugins/**/*",
       ".gitignore",
       ".env.example",
       "package.json",
@@ -40,6 +42,13 @@ export default defineConfig({
       "src/**/*.spec.ts",
       "src/**/*.spec.tsx",
       "src/dev-only/**",
+      "plugins/**/node_modules/**",
+      "plugins/**/.zenbu/**",
+      "plugins/**/dist/**",
+      "plugins/**/*.test.ts",
+      "plugins/**/*.test.tsx",
+      "plugins/**/*.spec.ts",
+      "plugins/**/*.spec.tsx",
     ],
     mirror: {
       target: "zenbu-labs/zenbujs-demo",

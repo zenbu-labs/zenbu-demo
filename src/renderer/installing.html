@@ -2,15 +2,35 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="zenbu-bg" content="#111">
+<meta name="zenbu-bg" content="#fafafa" media="(prefers-color-scheme: light)">
+<meta name="zenbu-bg" content="#09090b" media="(prefers-color-scheme: dark)">
 <title>Installing</title>
 <style>
+  :root {
+    color-scheme: light dark;
+    --bg: #fafafa;
+    --fg: #18181b;
+    --muted: #71717a;
+    --bar-bg: #e4e4e7;
+    --bar-fill: #18181b;
+    --error: #dc2626;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #09090b;
+      --fg: #f4f4f5;
+      --muted: #71717a;
+      --bar-bg: #27272a;
+      --bar-fill: #f4f4f5;
+      --error: #ef4444;
+    }
+  }
   html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    background: #111;
-    color: #ddd;
+    background: var(--bg);
+    color: var(--fg);
     font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
     -webkit-app-region: drag;
     user-select: none;
@@ -26,15 +46,14 @@
   }
   .label {
     font-size: 14px;
-    color: #f0f0f0;
-    letter-spacing: 0.2px;
+    color: var(--fg);
     min-height: 1.4em;
     text-align: center;
   }
   .bar {
     width: min(360px, 70%);
     height: 4px;
-    background: #2a2a2a;
+    background: var(--bar-bg);
     border-radius: 2px;
     overflow: hidden;
     position: relative;
@@ -43,20 +62,12 @@
     position: absolute;
     inset: 0 auto 0 0;
     width: 0%;
-    background: #f0f0f0;
-    transition: width 180ms ease-out;
-  }
-  .bar.indeterminate .bar-fill {
-    width: 30%;
-    animation: slide 1.2s ease-in-out infinite;
-  }
-  @keyframes slide {
-    0%   { transform: translateX(-100%); }
-    100% { transform: translateX(366%); }
+    background: var(--bar-fill);
+    transition: width 200ms cubic-bezier(0.25, 0.1, 0.25, 1);
   }
   .message {
     font-size: 11px;
-    color: #888;
+    color: var(--muted);
     font-family: "SF Mono", Menlo, Consolas, monospace;
     max-width: min(420px, 90%);
     text-align: center;
@@ -69,48 +80,68 @@
 </head>
 <body>
   <div class="label" id="label">Starting&hellip;</div>
-  <div class="bar indeterminate" id="bar"><div class="bar-fill" id="fill"></div></div>
+  <div class="bar"><div class="bar-fill" id="fill"></div></div>
   <div class="message" id="message"></div>
   <script>
-    // The framework's built-in preload exposes `window.zenbuInstall` with
-    // `.on(event, cb)` returning an unsubscribe function. Events:
-    //   step:     { id: "clone" | "fetch" | "install" | "handoff", label }
-    //   message:  { text }
-    //   progress: { phase?, loaded?, total?, ratio? }
-    //   done:     { id }
-    //   error:    { id?, message }
+    // Fake exponential progress: we don't trust whatever real progress
+    // events the framework emits (clone/install steps stall in chunks
+    // that look frozen). Instead we drive a smooth taper:
+    //
+    //   p(t) = 1 - exp(-k * t)
+    //
+    // With k = 0.0003 per ms (0.3 / s):
+    //   t=1s   -> 26%
+    //   t=3s   -> 59%
+    //   t=5s   -> 78%
+    //   t=10s  -> 95%
+    //   t=20s  -> 99.7%
+    //
+    // We cap the visible value at 99% so we never display 100% before
+    // the app actually hands off; on `done` we snap to 100.
     const api = window.zenbuInstall;
     const labelEl = document.getElementById("label");
     const messageEl = document.getElementById("message");
-    const barEl = document.getElementById("bar");
     const fillEl = document.getElementById("fill");
+
+    const k = 0.0003;
+    const cap = 99;
+    const start = performance.now();
+    let raf = 0;
+    let stopped = false;
+
+    function tick() {
+      if (stopped) return;
+      const elapsed = performance.now() - start;
+      const pct = (1 - Math.exp(-k * elapsed)) * 100;
+      fillEl.style.width = Math.min(cap, pct).toFixed(2) + "%";
+      raf = requestAnimationFrame(tick);
+    }
+    raf = requestAnimationFrame(tick);
+
+    function complete() {
+      stopped = true;
+      cancelAnimationFrame(raf);
+      fillEl.style.width = "100%";
+    }
+
     if (api) {
       api.on("step", (p) => {
         if (p && p.label) labelEl.textContent = p.label;
-        barEl.classList.add("indeterminate");
-        fillEl.style.width = "";
       });
       api.on("message", (p) => {
         if (p && p.text) messageEl.textContent = p.text;
       });
-      api.on("progress", (p) => {
-        const ratio = p && typeof p.ratio === "number" ? p.ratio : null;
-        if (ratio != null && ratio >= 0) {
-          barEl.classList.remove("indeterminate");
-          fillEl.style.width = Math.max(2, Math.min(100, ratio * 100)) + "%";
-        } else {
-          barEl.classList.add("indeterminate");
-        }
-      });
       api.on("done", () => {
         messageEl.textContent = "";
+        complete();
       });
       api.on("error", (p) => {
+        stopped = true;
+        cancelAnimationFrame(raf);
         labelEl.textContent = "Failed";
         if (p && p.message) messageEl.textContent = p.message;
-        barEl.classList.remove("indeterminate");
         fillEl.style.width = "100%";
-        fillEl.style.background = "#d04444";
+        fillEl.style.background = "var(--error)";
       });
     }
   </script>

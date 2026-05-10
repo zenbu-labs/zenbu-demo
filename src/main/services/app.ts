@@ -6,6 +6,6 @@ export class AppService extends Service.create({
   deps: { window: WindowService },
 }) {
   async evaluate() {
-    await this.ctx.window.openView({ type: "app" })
+    await this.ctx.window.openView({ type: "entrypoint" })
   }
 }

@@ -2,17 +2,17 @@ import { Minus, Plus, RotateCcw } from "lucide-react"
 import { useDb, useDbClient } from "@zenbujs/core/react"
 
 export function Counter() {
-  const count = useDb((root) => root.plugin.app.count)
+  const count = useDb((root) => root.app.count)
   const client = useDbClient()
 
   const bump = (delta: number) =>
     client.update((db) => {
-      db.plugin.app.count += delta
+      db.app.count += delta
     })
 
   const reset = () =>
     client.update((db) => {
-      db.plugin.app.count = 0
+      db.app.count = 0
     })
 
   return (

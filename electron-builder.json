@@ -1,13 +1,15 @@
 {
   "appId": "dev.zenbu.zenbujs-demo",
-  "productName": "zenbujs-demo",
+  "productName": "Zenbu Demo",
   "asar": false,
   "directories": {
-    "output": "dist"
+    "output": "dist",
+    "buildResources": "build"
   },
   "mac": {
     "category": "public.app-category.developer-tools",
     "target": ["dmg"],
+    "icon": "build/icon.png",
     "identity": "Robert Pruzan (7YBC6H852Y)",
     "hardenedRuntime": true,
     "gatekeeperAssess": false,

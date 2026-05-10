@@ -1,8 +1,6 @@
-import { createSchema, InferRoot, InferSchema, z } from "@zenbujs/core/db"
+import { createSchema } from "@zenbujs/core/db"
+import { z } from "zod"
 
-export const schema = createSchema({
+export default createSchema({
   count: z.number().default(0),
 })
-
-export type AppSchema = InferSchema<typeof schema>
-export type SchemaRoot = InferRoot<AppSchema>

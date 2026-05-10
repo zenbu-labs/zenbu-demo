@@ -20,13 +20,6 @@ const migration: KyjuMigration = {
       "kind": "data",
       "hasDefault": true,
       "default": 0
-    },
-    {
-      "op": "add",
-      "key": "promptsCopied",
-      "kind": "data",
-      "hasDefault": true,
-      "default": []
     }
   ],
 }

@@ -1,6 +1,6 @@
 {
   "name": "zenbujs-demo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "type": "module",
   "main": "node_modules/@zenbujs/core/dist/setup-gate.mjs",
@@ -10,12 +10,13 @@
     "build:electron": "if [ -f .env.local ]; then set -a; . ./.env.local; set +a; fi && zen build:electron",
     "publish:source": "if [ -f .env.local ]; then set -a; . ./.env.local; set +a; fi && zen publish:source",
     "link": "zen link",
-    "db:generate": "zen db generate"
+    "db:generate": "zen db generate",
+    "postinstall": "for d in plugins/*; do [ -f \"$d/package.json\" ] && (echo \"[postinstall] $d\" && cd \"$d\" && \"$npm_execpath\" install) || true; done"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.0",
     "@vitejs/plugin-react": "^5.0.0",
-    "@zenbujs/core": "^0.0.9",
+    "@zenbujs/core": "^0.0.13",
     "lucide-react": "^1.14.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
