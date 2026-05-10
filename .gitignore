@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.zenbu/
+node_modules/.zenbujs/
+tsconfig.local.json
+.env
+.env.*
+!.env.example
