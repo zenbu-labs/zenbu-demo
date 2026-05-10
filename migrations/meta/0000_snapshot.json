@@ -1,0 +1,18 @@
+{
+  "id": "1f59f2bd-f860-4934-8ef9-7fcdbeb2256d",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "fields": {
+    "count": {
+      "kind": "data",
+      "hasDefault": true,
+      "typeHash": "8388a0b5afc11559",
+      "default": 0
+    },
+    "promptsCopied": {
+      "kind": "data",
+      "hasDefault": true,
+      "typeHash": "155e3a79d3504265",
+      "default": []
+    }
+  }
+}

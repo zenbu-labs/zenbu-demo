@@ -1,101 +1,28 @@
-import { ZenbuProvider, useDb, useDbClient, useRpc } from "@zenbujs/core/react"
-import { useState } from "react"
+import { ZenbuProvider } from "@zenbujs/core/react"
+import { Counter } from "./counter"
+import { Sidebar } from "./sidebar"
 
 function Titlebar() {
   return (
     <div
-      className="h-10 flex items-center justify-end px-3 pl-[72px] shrink-0"
-      // @ts-expect-error webkit property
+      className="h-9 shrink-0 bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-900"
+      // @ts-expect-error webkit
       style={{ WebkitAppRegion: "drag" }}
     />
-  )
-}
-
-function Home() {
-  const db = useDb()
-  const client = useDbClient()
-  const rpc = useRpc()
-  const [cwd, setCwd] = useState<string | null>(null)
-
-  const issues = db.plugin.app.issues
-
-  return (
-    <main className="flex-1 px-8 pb-8 font-sans text-[#e5e5e5]">
-      <h1 className="text-2xl font-bold mb-2">Welcome to Zenbu</h1>
-      <p className="text-[#888] mb-6">
-        Edit <code>src/renderer/App.tsx</code> to get started.
-      </p>
-
-      <form
-        className="flex flex-col gap-3 bg-[#18181b] rounded-xl p-4 max-w-md mb-6"
-        onSubmit={(e) => {
-          e.preventDefault()
-          const form = e.currentTarget
-          const title = (form.elements.namedItem("title") as HTMLInputElement).value
-          if (!title.trim()) return
-          client.update((db) => {
-            db.plugin.app.issues.push({
-              id: crypto.randomUUID(),
-              title,
-              createdAt: Date.now(),
-            })
-          })
-          form.reset()
-        }}
-      >
-        <input
-          name="title"
-          placeholder="New issue title"
-          autoComplete="off"
-          className="px-3 py-2 rounded bg-[#222] border border-[#333] outline-none focus:border-indigo-500"
-        />
-        <button
-          type="submit"
-          className="bg-indigo-600 hover:bg-indigo-700 transition text-white font-semibold px-4 py-2 rounded"
-        >
-          + add
-        </button>
-      </form>
-
-      <div className="max-w-md mb-6">
-        {issues.length === 0 ? (
-          <div className="text-[#888] italic">No issues yet — try adding one.</div>
-        ) : (
-          issues.map((issue) => (
-            <div
-              key={issue.id}
-              className="mb-2 p-3 rounded-lg bg-[#222] border border-[#2a2a2a] flex items-center justify-between"
-            >
-              <span>{issue.title}</span>
-              <span className="text-xs text-[#666]">
-                {new Date(issue.createdAt).toLocaleTimeString()}
-              </span>
-            </div>
-          ))
-        )}
-      </div>
-
-      <button
-        className="bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded text-sm"
-        onClick={async () => setCwd(await rpc.repo.getCwd())}
-      >
-        rpc → main process cwd
-      </button>
-      {cwd && (
-        <div className="mt-2 p-2 rounded bg-[#232328] text-[#b0b0b0] w-fit text-xs">
-          {cwd}
-        </div>
-      )}
-    </main>
   )
 }
 
 export function App() {
   return (
     <ZenbuProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
         <Titlebar />
-        <Home />
+        <div className="flex flex-1 min-h-0">
+          <main className="flex-1 flex items-center justify-center p-8 min-w-0">
+            <Counter />
+          </main>
+          <Sidebar />
+        </div>
       </div>
     </ZenbuProvider>
   )

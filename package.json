@@ -1,20 +1,22 @@
 {
-  "name": "demo-app",
+  "name": "zenbujs-demo",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "main": "node_modules/@zenbujs/core/dist/setup-gate.mjs",
   "scripts": {
     "dev": "zen dev",
-    "build:source": "zen build:source",
-    "build:electron": "zen build:electron",
-    "publish:source": "zen publish:source",
+    "build:source": "if [ -f .env.local ]; then set -a; . ./.env.local; set +a; fi && zen build:source",
+    "build:electron": "if [ -f .env.local ]; then set -a; . ./.env.local; set +a; fi && zen build:electron",
+    "publish:source": "if [ -f .env.local ]; then set -a; . ./.env.local; set +a; fi && zen publish:source",
     "link": "zen link",
     "db:generate": "zen db generate"
   },
   "dependencies": {
-    "@zenbujs/core": "^0.0.9",
     "@tailwindcss/vite": "^4.2.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "@zenbujs/core": "^0.0.9",
+    "lucide-react": "^1.14.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.2.0",
@@ -30,7 +32,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/zenbu-labs/zenbujs-demo.git"
   },
   "zenbu": {
     "host": ">=0.0.0 <0.1.0"
