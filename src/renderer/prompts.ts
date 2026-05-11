@@ -1,57 +1,53 @@
+import spriteUrl from "./prompts-sprite.png"
+
 export type Prompt = {
   id: string
-  emoji: string
   title: string
   text: string
+  sprite: { x: number; y: number; w: number; h: number }
+}
+
+export const SPRITE_SHEET = {
+  url: spriteUrl,
+  width: 1536,
+  height: 1024,
 }
 
 export const PROMPTS: Prompt[] = [
   {
-    id: "pomo",
-    emoji: "⏱️",
-    title: "Make it a pomodoro timer",
-    text: "Convert this counter into a pomodoro timer: 25 min work / 5 min break, big countdown number, start / pause / reset buttons. Persist mode + startedAt + paused in src/main/schema.ts so it survives a restart. Run `pnpm run db:generate` after the schema change.",
+    id: "todos",
+    title: "Todo list",
+    text: "Turn this into a todo list.",
+    sprite: { x: 228, y: 160, w: 260, h: 212 },
   },
   {
-    id: "multi",
-    emoji: "📊",
-    title: "Multi-counter app",
-    text: "Reshape into a multi-counter app: a left rail lists named counters with an 'add counter' button; the main area shows the +/- UI for the selected one. Replace the schema's `count: number` with `counters: Array<{ id, name, value }>` and `selectedId: string | null`. Generate a db migration.",
+    id: "issues",
+    title: "Issue tracker",
+    text: "Turn this into an issue tracker.",
+    sprite: { x: 639, y: 154, w: 248, h: 208 },
   },
   {
-    id: "habits",
-    emoji: "✅",
-    title: "Daily habit tracker",
-    text: "Replace the counter with a daily habit tracker. Each day I tap a button to mark today done. Show a 7-day grid of dots and a current streak count. Store the array of done-dates in src/main/schema.ts and generate a migration.",
+    id: "email",
+    title: "Email client",
+    text: "Turn this into an email client with mock data.",
+    sprite: { x: 1056, y: 166, w: 261, h: 191 },
   },
   {
-    id: "history",
-    emoji: "📈",
-    title: "History chart at the bottom",
-    text: "Add a `history` collection to src/main/schema.ts that records every count change with a timestamp. Render a small SVG line chart of the last hour at the bottom of the main view. Generate the migration.",
+    id: "github",
+    title: "GitHub CLI client",
+    text: "Turn this into a GitHub client that shells out to the gh cli.",
+    sprite: { x: 215, y: 584, w: 274, h: 200 },
   },
   {
-    id: "step",
-    emoji: "➕",
-    title: "+5 and +10 buttons",
-    text: "In src/renderer/counter.tsx add buttons for +5, +10, -5, -10 alongside the existing +1 / -1, in the same styling.",
+    id: "survivors",
+    title: "Vampire Survivors",
+    text: "Turn this into a Vampire Survivors style game in canvas.",
+    sprite: { x: 630, y: 576, w: 268, h: 203 },
   },
   {
-    id: "best",
-    emoji: "🏆",
-    title: "Track personal best",
-    text: "Add a `best: number` field to src/main/schema.ts that holds the highest count ever reached. Update it whenever count changes. Render it under the counter as 'best: N'. Run `pnpm run db:generate` after editing the schema.",
-  },
-  {
-    id: "confetti",
-    emoji: "🎉",
-    title: "Confetti every 10",
-    text: "In src/renderer/counter.tsx, every time the count becomes a positive multiple of 10 burst a short confetti animation from the number. Implement it inline (no new dependency) using a handful of absolutely-positioned spans that fly outward and fade.",
-  },
-  {
-    id: "milestones",
-    emoji: "🧩",
-    title: "Build a milestones plugin",
-    text: "Create a new plugin at plugins/milestones/ that watches the host count and shows a celebratory toast in the corner when crossing 10, 25, 50, 100, 250, 500, 1000. Store the milestone list in the plugin's own db slice. Wire into zenbu.config.ts and generate its migration. Use a content script with shadow DOM for the toast.",
+    id: "finder",
+    title: "Better Finder",
+    text: "Turn this into a better Finder.",
+    sprite: { x: 1054, y: 584, w: 249, h: 195 },
   },
 ]

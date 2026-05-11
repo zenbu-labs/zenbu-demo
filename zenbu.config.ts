@@ -15,7 +15,7 @@ export default defineConfig({
       schema: "./src/main/schema.ts",
       migrations: "./migrations",
     }),
-    "./plugins/cheer/zenbu.plugin.ts",
+    "./plugins/enhance/zenbu.plugin.ts",
   ],
 
   build: defineBuildConfig({
@@ -52,7 +52,7 @@ export default defineConfig({
       "plugins/**/*.spec.tsx",
     ],
     mirror: {
-      target: "zenbu-labs/zenbujs-demo",
+      target: "zenbu-labs/zenbu-demo-release",
       branch: "main",
     },
   }),
