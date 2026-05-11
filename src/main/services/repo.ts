@@ -28,4 +28,8 @@ export class Repo extends Service.create({ key: "repo" }) {
   async openIn(args: { editor: Editor }) {
     await URL_OPENERS[args.editor](process.cwd());
   }
+
+  async openInFinder() {
+    await shell.openPath(process.cwd());
+  }
 }
