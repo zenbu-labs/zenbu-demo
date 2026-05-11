@@ -19,7 +19,7 @@
     {
       "provider": "github",
       "owner": "zenbu-labs",
-      "repo": "zenbujs-demo",
+      "repo": "zenbu-demo-release",
       "releaseType": "release"
     }
   ]
